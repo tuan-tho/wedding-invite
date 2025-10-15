@@ -535,3 +535,26 @@ figure.tile{ margin:0 }
   .to-top-btn{ bottom: max(16px, env(safe-area-inset-bottom)); }
   .music-btn{ bottom: calc(max(16px, env(safe-area-inset-bottom)) + 70px) !important; }
 }
+.hero-text .names {
+  white-space: nowrap;          /* Không cho xuống hàng */
+  text-align: center;           /* Căn giữa tên */
+  font-size: 28px;              /* Kích thước chữ (bạn có thể tăng/giảm tùy ý) */
+  line-height: 1.4;             /* Giãn dòng nhẹ cho đẹp */
+}
+@media (max-width: 420px) {
+  .hero-text .names {
+    white-space: normal; /* Cho phép xuống dòng khi màn hình quá hẹp */
+  }
+}
+.ty-names {
+  white-space: nowrap;     /* ✅ Không cho xuống dòng */
+  text-align: center;      /* Căn giữa tên */
+  font-size: 22px;         /* Kích thước chữ (tuỳ chỉnh) */
+  font-weight: 500;        /* Đậm nhẹ cho sang */
+  letter-spacing: 1px;     /* Giãn chữ nhẹ */
+}
+@media (max-width: 400px) {
+  .ty-names {
+    white-space: normal;   /* Cho phép xuống hàng lại khi cần */
+  }
+}

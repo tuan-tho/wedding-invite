@@ -1,0 +1,537 @@
+:root{
+  --brand:#9b87f5;
+  --ink:#1f2937;
+  --paper:#faf7ff;
+  --border:#e5e7eb;
+  --green:#2f5a3f;
+  --pink:#ffc0cb;
+  --pink-2:#ffe3ea;
+  --purple:#6b5d5d;
+}
+
+/* Reset */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden}
+
+/* ===== HERO ===== */
+.hero-cover{position:relative;height:100svh;overflow:hidden}
+.hero-img{width:100%;height:100%;object-fit:cover}
+.hero-text{position:absolute;bottom:12vh;left:50%;transform:translateX(-50%);text-align:center;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.45)}
+.invite{font-size:16px;letter-spacing:2px;margin-bottom:6px}
+.names{font-family:"Playfair Display",serif;font-size:28px;font-weight:600}
+
+/* Music button – fixed bottom-left (nhích lên để chừa chỗ nút lên đầu) */
+.music-btn{
+  position:fixed;left:16px;bottom:86px;z-index:50;
+  width:56px;height:56px;border-radius:50%;border:0;cursor:pointer;
+  background:#fff;box-shadow:0 10px 24px rgba(0,0,0,.18);
+  display:grid;place-items:center;
+}
+.music-btn .icon-sound,.music-btn .icon-mute{display:none}
+.music-btn.playing .icon-sound{display:block}
+.music-btn.muted .icon-mute{display:block}
+
+/* Nút lên đầu trang – đặt dưới icon nhạc */
+.to-top-btn{
+  position:fixed;left:16px;bottom:16px;z-index:49;
+  width:56px;height:56px;border-radius:50%;border:0;cursor:pointer;
+  background:#fff;box-shadow:0 10px 24px rgba(0,0,0,.18);
+  display:grid;place-items:center;
+  transition:transform .2s ease,opacity .2s ease;
+}
+.to-top-btn:hover{transform:translateY(-2px)}
+
+/* ===== LAYOUT ===== */
+.section{padding:28px 18px}
+
+/* 👉 tăng size câu trích dẫn */
+.family .quote{
+  text-align:center;
+  font-style:italic;
+  opacity:.9;
+  margin-bottom:20px;
+  font-size:20px;
+  line-height:1.6;
+  color:#4f3b46;
+}
+@media (min-width:768px){
+  .family .quote{font-size:22px}
+}
+
+.parents{display:grid;gap:14px}
+@media(min-width:560px){.parents{grid-template-columns:repeat(2,1fr)}}
+.parents .side{border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;background:#fff}
+.heart-divider{display:grid;place-items:center;margin:10px 0}
+
+/* giữ sẵn lớp heart-center (không bắt buộc dùng) */
+.heart-center{
+  display:flex;justify-content:center;align-items:center;
+  font-size:36px;margin:10px auto;
+  animation:beat 1.6s ease-in-out infinite;
+}
+@keyframes beat{
+  0%,100%{transform:scale(1);opacity:1}
+  50%{transform:scale(1.25);opacity:.85}
+}
+
+.signatures{display:grid;gap:12px;text-align:center;margin-top:12px}
+@media(min-width:560px){.signatures{grid-template-columns:repeat(2,1fr)}}
+.sig-name{font-family:"Great Vibes",cursive;font-size:32px}
+
+/* ===== THƯ MỜI ===== */
+.invitation{text-align:center;background:#fff}
+.frame{
+  display:grid;grid-template-columns:1fr 1fr;gap:18px;
+  max-width:840px;margin:0 auto 16px;padding:14px;
+  border:10px solid var(--green);border-radius:4px;background:#f6fff7;
+}
+.frame img{width:100%;height:auto;display:block;object-fit:cover}
+.invite-text{margin:18px 0}
+.invite-text .divider{width:160px;height:3px;background:#1d2a35;margin:0 auto 10px;border-radius:4px}
+.script{font-family:"Great Vibes",cursive;font-size:36px;color:#1d2a35;margin-bottom:4px}
+.bottom-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:840px;margin:0 auto}
+.bottom-photos img{width:100%;height:auto;display:block;object-fit:cover}
+
+/* ===== SỰ KIỆN ===== */
+.events{text-align:center;background:#ffeaf3;margin-top:24px}
+.events h2{font-family:"Great Vibes",cursive;font-size:36px;margin-bottom:20px;color:#9b1b30}
+.event-grid{display:grid;gap:16px;justify-content:center;grid-template-columns:1fr;grid-template-areas:"gai" "trai" "le"}
+@media (min-width:900px){
+  .event-grid{grid-template-columns:minmax(260px,320px) minmax(260px,320px);grid-template-areas:"gai trai" "le le"}
+}
+.event-card{background:#6b5d5d;color:#fff;border-radius:12px;padding:12px;text-align:center;box-shadow:0 4px 10px rgba(0,0,0,.15)}
+.event-card img{width:100%;height:150px;object-fit:cover;border-radius:10px;margin-bottom:10px}
+.event-gai{grid-area:gai}
+.event-trai{grid-area:trai}
+.event-le{grid-area:le;justify-self:center;max-width:320px;width:100%}
+.btn-row{display:flex;gap:10px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+.btn{display:inline-block;padding:10px 14px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px}
+.btn.small{padding:8px 12px;font-size:13px}
+.btn-primary{background:#ffd97a;color:#5c4b00}
+.btn-map{background:#ffffff;color:#333}
+.btn.outline{background:transparent;border:1px solid #fff;color:#fff}
+
+/* ===== HỘP MỪNG CƯỚI ===== */
+.gift{
+  text-align:center;background:var(--pink);color:#fff;position:relative;padding:40px 18px;
+}
+.gift .script{color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.25);}
+.gift .gift-sub{color:#fff;opacity:.95;font-size:16px;margin:6px auto 20px;max-width:640px}
+.gift-box{
+  margin:8px auto 0;width:140px;height:140px;border-radius:22px;
+  background:rgba(255,255,255,0.15);border:2px solid #fff;
+  display:grid;place-items:center;cursor:pointer;transition:transform .3s, box-shadow .3s;
+  box-shadow:0 8px 24px rgba(0,0,0,.2);
+}
+.gift-box:hover{transform:translateY(-6px)}
+.gift-emoji{font-size:64px;animation:bounce 1.5s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* ===== MODAL QR ===== */
+.hidden{display:none}
+.modal{position:fixed;inset:0;z-index:20}
+.modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.55)}
+.modal-body{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:min(92vw,860px);background:rgba(255,192,203,0.95);
+  border:2px solid #fff;border-radius:16px;padding:18px;color:#fff;
+  box-shadow:0 10px 30px rgba(0,0,0,.35)
+}
+.modal-title,.modal-white{color:#fff}
+.modal-close{position:absolute;right:10px;top:8px;width:36px;height:36px;border:0;border-radius:50%;background:#ffffff33;color:#fff;font-size:22px;cursor:pointer}
+.modal-sub{text-align:center;margin-bottom:10px}
+.qr-grid{display:grid;gap:14px;align-items:flex-start}
+@media(min-width:720px){.qr-grid{grid-template-columns:1fr 1fr}}
+.qr-card{border:1px solid var(--pink-2);border-radius:12px;padding:12px;text-align:center;background:#ffffff22}
+.qr-card h4{font-size:14px;letter-spacing:.3px;margin-bottom:8px;color:#fff}
+.qr-img{width:100%;max-width:260px;height:auto;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.12)}
+.qr-actions{display:flex;gap:10px;justify-content:center;margin-top:10px}
+
+/* Khoá nền khi modal mở (nếu dùng) */
+body.modal-open{overflow:hidden}
+
+/* ===== SỔ LƯU BÚT ===== */
+.guestbook{padding:36px 18px;background:linear-gradient(180deg,var(--pink) 0%,#ffd6df 38%,var(--pink-2) 100%)}
+.gb-wrap{max-width:860px;margin:0 auto;background:#fff;border:1px solid var(--pink-2);border-radius:16px;padding:22px;box-shadow:0 10px 28px rgba(255,131,164,.25)}
+.gb-icon{font-size:30px;margin-bottom:6px}
+.gb-title{font-family:"Great Vibes",cursive;font-size:40px;color:#3a2e2e;margin-bottom:6px}
+.gb-sub{opacity:.85;margin-bottom:18px;text-align:center}
+.gb-form{display:flex;flex-direction:column;gap:12px}
+.gb-row{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:640px){.gb-row{grid-template-columns:1fr 220px}}
+.gb-input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--border);outline:none;font-size:15px;background:#fff}
+.gb-input:focus{border-color:#f09fb7;box-shadow:0 0 0 4px rgba(240,159,183,.15)}
+.gb-btn{align-self:center;padding:12px 18px;border-radius:999px;border:0;cursor:pointer;background:#a17390;color:#fff;font-weight:700;letter-spacing:.2px;box-shadow:0 10px 20px rgba(161,115,144,.25);transition:transform .2s,filter .2s}
+.gb-btn:hover{transform:translateY(-2px);filter:brightness(1.04)}
+.gb-note{margin-top:6px;text-align:center;color:#5c3e52;font-size:14px}
+
+/* ===== LỜI MỜI & FOOTER ===== */
+.section__title{text-align:center;margin-bottom:8px;font-size:20px}
+.section__text{text-align:center;max-width:400px;margin:0 auto}
+.footer{text-align:center;padding:20px;opacity:.75}
+
+/* ===== TRÁI TIM RƠI ===== */
+#hearts-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:5}
+.heart{position:absolute;color:#ff4d88;font-size:16px;opacity:.75;animation:fall 6s linear forwards}
+@keyframes fall{0%{transform:translateY(-10px) rotate(0deg)}100%{transform:translateY(100vh) rotate(360deg);opacity:0}}
+
+/* ===== RSVP (Xác nhận tham dự) ===== */
+.rsvp{background:#fff5f8}
+.rsvp-card{
+  max-width:860px;margin:0 auto;background:#fdeef3;border-radius:16px;
+  padding:24px;box-shadow:0 10px 24px rgba(0,0,0,.08);border:1px solid var(--pink-2)
+}
+.rsvp-avatar{display:flex;justify-content:center;margin-top:-62px;margin-bottom:10px}
+.rsvp-avatar img{width:124px;height:124px;object-fit:cover;border-radius:999px;border:6px solid #f7dbe3;box-shadow:0 6px 16px rgba(0,0,0,.12)}
+.rsvp-title{font-family:"Great Vibes",cursive;font-size:40px;color:#4c2d37;text-align:center;margin:6px 0 4px}
+.rsvp-sub{text-align:center;opacity:.9;margin-bottom:16px}
+.rsvp-form{display:flex;flex-direction:column;gap:12px;max-width:720px;margin:0 auto}
+.rsvp-row{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:640px){.rsvp-row{grid-template-columns:1fr 1fr}}
+.rsvp-input{
+  width:100%;padding:12px 14px;border-radius:10px;border:1px solid #e0c5cc;background:#fff;outline:none
+}
+.rsvp-input:focus{border-color:#f09fb7;box-shadow:0 0 0 4px rgba(240,159,183,.15)}
+.rsvp-radio{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+.rsvp-btn{
+  align-self:center;background:#9d6b83;color:#fff;border:0;border-radius:999px;padding:12px 22px;
+  cursor:pointer;font-weight:700;letter-spacing:.2px;box-shadow:0 10px 20px rgba(157,107,131,.25)
+}
+.rsvp-btn:hover{filter:brightness(1.05);transform:translateY(-1px)}
+.rsvp-note{text-align:center;margin-top:8px;color:#5c3e52}
+
+/* ===== THANK YOU SECTION ===== */
+.thankyou{position:relative;padding:0;text-align:center;color:#fff;background:#000}
+.ty-container{position:relative;width:100%;height:85vh;overflow:hidden}
+.ty-img{width:100%;height:100%;object-fit:cover;opacity:.9}
+.ty-text{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  text-align:center;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6);
+}
+.ty-title{font-family:"Great Vibes",cursive;font-size:64px;margin-bottom:6px}
+.ty-names{font-family:"Playfair Display",serif;font-size:22px}
+.ty-hearts{margin-top:10px;font-size:20px}
+
+/* footer cuối trang (ghi đè nhẹ) */
+.footer{
+  background:#fff;color:#4b3d3d;text-align:center;padding:18px;
+  font-size:15px;opacity:.9;font-weight:500;
+}
+
+/* ===== COUPLE FRAME – KHUNG CONG ĐẸP ===== */
+.couple-frame {
+  background: #fff5f8;
+  padding: 60px 20px 40px;
+  position: relative;
+  overflow: hidden;
+}
+.couple-box {
+  max-width: 980px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, #fff0f5 0%, #ffffff 100%);
+  border-radius: 180px 180px 0 0;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  padding: 40px 20px 60px;
+  position: relative;
+}
+.couple-header { margin-bottom: 30px; }
+.couple-icon { width: 60px; margin-bottom: 8px; }
+.couple-title { font-family: "Great Vibes", cursive; font-size: 38px; color: #4b2b2b; }
+
+/* Lưới 3 ô: groom | heart | bride */
+.couple-grid{
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-areas: "groom heart bride";
+  align-items: flex-start;
+  gap: 20px;
+}
+
+/* Gán area cho 3 phần */
+.bridegroom{ grid-area: groom; }
+.bride{ grid-area: bride; }
+.heart-center{ grid-area: heart; }
+
+/* Ảnh */
+.couple-img{
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 8px 18px rgba(0,0,0,.15);
+  margin-bottom: 10px;
+}
+.couple-name{ font-family:"Great Vibes",cursive; font-size:32px; color:#472c2c; }
+.couple-line{ width:60%; height:1.5px; background:#ccc; margin:8px auto 10px; }
+.couple-grid p{ font-size:15px; color:#333; margin:2px 0; line-height:1.45; }
+
+@keyframes beat{ 0%,100%{transform:scale(1)} 50%{transform:scale(1.25)} }
+
+/* 👉 Mobile: vẫn 2 cột, tim xuống hàng */
+@media (max-width: 768px){
+  .couple-box{ border-radius: 80px 80px 0 0; padding: 28px 14px 36px; }
+  .couple-title{ font-size: 32px; }
+
+  .couple-grid{
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "groom bride"
+      "heart heart";
+    gap: 12px;
+  }
+
+  .couple-img{ height: 220px; }
+  .couple-name{ font-size: 26px; }
+  .couple-line{ width: 70%; }
+  .heart-center{ font-size: 28px; margin-top: 6px; }
+}
+@media (max-width: 360px){
+  .couple-img{ height: 200px; }
+  .couple-name{ font-size: 24px; }
+}
+
+/* ===== LỄ THÀNH HÔN + COUNTDOWN (CĂN GIỮA CHẮC CHẮN) ===== */
+
+/* ===== LỄ THÀNH HÔN + COUNTDOWN (CĂN GIỮA CHẮC CHẮN) ===== */
+.wedding-calendar {
+  background: #fff;
+  text-align: center;
+  padding: 54px 18px 70px;
+}
+
+.wedding-calendar .cal-box {
+  width: min(560px, 100%);
+  max-width: 760px;
+  margin-inline: auto;
+  background: #fff7fa;
+  border: 2px solid #ffe1ea;
+  border-radius: 20px;
+  padding: 28px 18px;
+  box-shadow: 0 10px 28px rgba(255,131,164,.18);
+}
+
+.cal-title {
+  font-family: "Great Vibes", cursive;
+  font-size: 46px;
+  margin-bottom: 18px;
+  color: #9b1b30;
+}
+
+.cal-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.cal-table th,
+.cal-table td {
+  width: 14.285%;
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+.cal-table thead th {
+  font-weight: 700;
+  color: #5b4a4a;
+  background: #fff1f6;
+}
+.cal-table tbody td {
+  font-size: 15px;
+  color: #333;
+}
+
+.mark-heart {
+  position: relative;
+  font-weight: 700;
+  color: #9b1b30;
+}
+.mark-heart::after {
+  content: "💗";
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  font-size: 16px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.15));
+}
+
+/* Dòng thời gian nổi bật */
+.highlight-time {
+  margin: 20px 0 8px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #7a2e43;
+  text-align: center;
+}
+
+/* COUNTDOWN – luôn 1 hàng, căn giữa đẹp */
+.wedding-calendar .cal-box .countdown {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap !important;   /* ❌ không cho xuống dòng */
+  gap: 14px;
+  margin-top: 12px;
+  max-width: none;
+  overflow-x: auto;               /* nếu nhỏ quá thì cuộn ngang nhẹ */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.wedding-calendar .cal-box .cd-item {
+  flex: 1 1 auto;
+  min-width: 74px;
+  background: #fff;
+  border: 1px solid #f2c8d6;
+  border-radius: 12px;
+  padding: 10px 10px;
+  box-shadow: 0 6px 14px rgba(0,0,0,.06);
+}
+
+.wedding-calendar .cal-box .cd-item span {
+  display: block;
+  font-size: 30px;
+  font-weight: 800;
+  color: #e14b75;
+  line-height: 1;
+}
+
+.wedding-calendar .cal-box .cd-item small {
+  display: block;
+  margin-top: 4px;
+  color: #6b5d5d;
+  font-size: 13px;
+}
+
+/* Responsive tinh chỉnh */
+@media (max-width: 420px) {
+  .wedding-calendar .cal-box .cd-item {
+    min-width: 64px;
+    padding: 8px;
+  }
+  .wedding-calendar .cal-box .cd-item span {
+    font-size: 24px;
+  }
+}
+
+/* Safe-area iOS */
+@supports(padding:max(0px)) {
+  .wedding-calendar {
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+  }
+}
+
+
+/* ===== GALLERY ===== */
+.gallery{
+  background:#fbf7f2;
+  padding:56px 18px 64px;
+}
+.gallery-title{
+  font-family:"Playfair Display",serif;
+  font-size:28px; text-align:center; color:#3c2f2f; letter-spacing:.6px;
+}
+.gallery-sub{ text-align:center; margin:6px 0 22px; color:#6b5d5d; font-size:14.5px }
+.gallery-card{ max-width:1020px; margin:0 auto; padding:0 8px }
+.gallery-grid{
+  --gap:14px;
+  display:grid; gap:var(--gap);
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  align-items:stretch;
+}
+.gallery-grid > *{ min-width:0 }
+@media (max-width:1024px){ .gallery-grid{ grid-template-columns:repeat(3,minmax(0,1fr)) } }
+@media (max-width:560px){
+  .gallery-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); --gap:10px }
+}
+/* Ô ảnh */
+figure.tile{ margin:0 }
+.tile{
+  position:relative; overflow:hidden; border-radius:12px; background:#fff;
+  box-shadow:0 6px 16px rgba(0,0,0,.06);
+  aspect-ratio:1/1;
+}
+.tile.wide{ aspect-ratio:16/9 }
+.tile.tall{ aspect-ratio:3/4 }
+.tile.big{ grid-column:span 2; aspect-ratio:3/2 }
+/* Mobile: ép vuông */
+@media (max-width:560px){
+  .tile, .tile.wide, .tile.tall{ aspect-ratio:1/1 !important }
+  .tile.big{ grid-column:span 2; aspect-ratio:1/1 !important }
+}
+.tile img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform .35s ease, filter .35s ease;
+}
+.tile:hover img{ transform:scale(1.04); filter:saturate(1.05) }
+
+/* === Giữ countdown 1 hàng nếu muốn (tùy chọn)
+.wedding-calendar .countdown{ max-width:none; flex-wrap:nowrap; gap:16px }
+.wedding-calendar .cd-item{ min-width:74px; padding:12px 10px }
+@media (max-width:380px){
+  .wedding-calendar .countdown{ gap:12px }
+  .wedding-calendar .cd-item{ min-width:68px; padding:10px 8px }
+}
+@supports(padding:max(0px)){
+  .wedding-calendar .cal-box{ width: min(560px, 100% - env(safe-area-inset-left) - env(safe-area-inset-right) - 16px) }
+}
+*/
+
+/* ===== HIỆU ỨNG XUẤT HIỆN KHI CUỘN ===== */
+.fade-in { opacity:0; transform: translateY(40px); transition: opacity 1s ease-out, transform 1s ease-out; }
+.fade-in.show { opacity:1; transform:none; }
+.slide-left { opacity:0; transform: translateX(-40px); transition: opacity 1s ease-out, transform 1s ease-out; }
+.slide-left.show { opacity:1; transform:none; }
+.slide-right { opacity:0; transform: translateX(40px); transition: opacity 1s ease-out, transform 1s ease-out; }
+.slide-right.show { opacity:1; transform:none; }
+
+/* ===== HIỆU ỨNG TIÊU ĐỀ HERO CHẬM MƯỢT ===== */
+@keyframes heroFadeUp {
+  0%   { opacity: 0; transform: translateY(26px); }
+  60%  { opacity: 1; transform: translateY(4px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.hero-text .invite{ opacity:0; animation: heroFadeUp 2.2s ease-out 0.2s forwards; letter-spacing:2px; }
+.hero-text .names{  opacity:0; animation: heroFadeUp 3.0s cubic-bezier(.19,.7,.23,1) 0.6s forwards; font-variation-settings:"wght" 600; }
+
+/* Giảm chuyển động nếu người dùng yêu cầu */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  .fade-in, .slide-left, .slide-right { opacity: 1 !important; transform: none !important; }
+}
+.rsvp {
+  margin-bottom: 40px;
+}
+/* Để nút nhạc nằm cao hơn, chừa chỗ nút mũi tên ở dưới */
+.music-btn { bottom: 86px !important; }
+
+/* Nút mũi tên lên đầu trang */
+.to-top-btn{
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 49;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  color: #e14b75;
+  font-size: 22px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.18);
+  display: grid; place-items: center;
+  opacity: 0; visibility: hidden; transform: translateY(6px);
+  transition: opacity .25s ease, transform .25s ease, visibility .25s;
+}
+.to-top-btn.show { opacity: 1; visibility: visible; transform: translateY(0); }
+.to-top-btn:hover { transform: translateY(-2px); }
+
+/* safe-area iOS */
+@supports(padding:max(0px)){
+  .to-top-btn{ bottom: max(16px, env(safe-area-inset-bottom)); }
+  .music-btn{ bottom: calc(max(16px, env(safe-area-inset-bottom)) + 70px) !important; }
+}

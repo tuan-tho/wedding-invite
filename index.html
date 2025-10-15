@@ -7,6 +7,23 @@
   <meta name="theme-color" content="#9b87f5" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Great+Vibes&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css" />
+
+  <!-- 🎨 Tô màu ô 25–26 trong lịch (không dùng trái tim) -->
+  <style>
+    .cal-table td{ position:relative; text-align:center; padding:10px; font-weight:500; color:#5c3a3a }
+
+    /* Ô ngày được tô màu (25–26) */
+    .mark-fill{
+      width:44px; height:38px; margin:0 auto;
+      background:#ffe1ea;              /* màu nền nhạt */
+      border-radius:10px;               /* bo góc nhẹ */
+      display:grid; place-items:center; /* căn giữa số */
+    }
+    .mark-fill span{
+      font-weight:800; font-size:15px; color:#9b1b30; /* màu số đậm */
+      line-height:1;
+    }
+  </style>
 </head>
 
 <body>
@@ -20,7 +37,7 @@
 
     <div class="hero-text">
       <p class="invite">THƯ MỜI CƯỚI</p>
-      <h1 class="names">Quang Huy – Thanh Thùy</h1>
+      <h1 class="names">💕Quang Huy – Thanh Thùy💕</h1>
     </div>
 
     <!-- Nút nhạc -->
@@ -40,13 +57,13 @@
         </svg>
       </span>
     </button>
+
     <!-- Nút lên đầu trang -->
-<button id="toTopBtn" class="to-top-btn" aria-label="Lên đầu trang" title="Lên đầu trang">
-  <!-- mũi tên SVG -->
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-    <path d="M12 5l-7 7m7-7l7 7M12 5v14" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-</button>
+    <button id="toTopBtn" class="to-top-btn" aria-label="Lên đầu trang" title="Lên đầu trang">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 5l-7 7m7-7l7 7M12 5v14" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
   </section>
 
   <!-- ===== CÔ DÂU & CHÚ RỂ ===== -->
@@ -96,42 +113,35 @@
   </section>
 
   <!-- ===== SỰ KIỆN CƯỚI ===== -->
-<section class="section events" id="events">
-  <h2 class="script">Sự Kiện Cưới</h2>
+  <section class="section events" id="events">
+    <h2 class="script">Sự Kiện Cưới</h2>
 
-  <div class="event-grid">
-    <!-- Tiệc Nhà Gái -->
-    <div class="event-card event-gai">
-      <img src="./assets/images/images5.jpg" alt="Tiệc Nhà Gái">
-      <h3>Tiệc Cưới Nhà Gái</h3>
-      <p>⏰ 13:30 – Thứ Bảy, 25/10/2025</p>
-      <p>📍 Tư gia Nhà Gái – Khu Rừng Mãng, xã Tiên Lương, Phú Thọ</p>
-      <div class="btn-row">
-        <!-- ✅ Liên kết đến phần RSVP -->
-        <a class="btn btn-primary" href="#rsvp">Xác nhận tham dự</a>
-        <a class="btn btn-map"
-           href="https://maps.google.com/?q=Khu+R%E1%BB%ABng+M%C3%A3ng,+Ti%C3%AAn+L%C6%B0%C6%A1ng,+Ph%C3%BA+Th%E1%BB%8D"
-           target="_blank" rel="noopener">Xem bản đồ</a>
+    <div class="event-grid">
+      <!-- Tiệc Nhà Gái -->
+      <div class="event-card event-gai">
+        <img src="./assets/images/images5.jpg" alt="Tiệc Nhà Gái">
+        <h3>Tiệc Cưới Nhà Gái</h3>
+        <p>⏰ 13:30 – Thứ Bảy, 25/10/2025</p>
+        <p>📍 Tư gia Nhà Gái – Khu Rừng Mãng, xã Tiên Lương, Phú Thọ</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="#rsvp">Xác nhận tham dự</a>
+          <a class="btn btn-map" href="https://maps.google.com/?q=Khu+R%E1%BB%ABng+M%C3%A3ng,+Ti%C3%AAn+L%C6%B0%C6%A1ng,+Ph%C3%BA+Th%E1%BB%8D" target="_blank" rel="noopener">Xem bản đồ</a>
+        </div>
+      </div>
+
+      <!-- Tiệc Nhà Trai -->
+      <div class="event-card event-trai">
+        <img src="./assets/images/images4.jpg" alt="Tiệc Nhà Trai">
+        <h3>Tiệc Cưới Nhà Trai</h3>
+        <p>⏰ 13:30 – Chủ nhật, 25/10/2025</p>
+        <p>📍 Tư gia Nhà Trai – Khu Xóm Giữa, xã Tiên Lương, Phú Thọ</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="#rsvp">Xác nhận tham dự</a>
+          <a class="btn btn-map" href="https://maps.google.com/?q=Khu+X%C3%B3m+Gi%E1%BB%AFa,+Ti%C3%AAn+L%C6%B0%C6%A1ng,+Ph%C3%BA+Th%E1%BB%8D" target="_blank" rel="noopener">Xem bản đồ</a>
+        </div>
       </div>
     </div>
-
-    <!-- Tiệc Nhà Trai -->
-    <div class="event-card event-trai">
-      <img src="./assets/images/images4.jpg" alt="Tiệc Nhà Trai">
-      <h3>Tiệc Cưới Nhà Trai</h3>
-      <p>⏰ 13:30 – Chủ nhật, 25/10/2025</p>
-      <p>📍 Tư gia Nhà Trai – Khu Xóm Giữa, xã Tiên Lương, Phú Thọ</p>
-      <div class="btn-row">
-        <!-- ✅ Liên kết đến phần RSVP -->
-        <a class="btn btn-primary" href="#rsvp">Xác nhận tham dự</a>
-        <a class="btn btn-map"
-           href="https://maps.google.com/?q=Khu+X%C3%B3m+Gi%E1%BB%AFa,+Ti%C3%AAn+L%C6%B0%C6%A1ng,+Ph%C3%BA+Th%E1%BB%8D"
-           target="_blank" rel="noopener">Xem bản đồ</a>
-      </div>
-    </div>
-  </div>
-</section>
-
+  </section>
 
   <!-- ===== LỄ THÀNH HÔN + COUNTDOWN ===== -->
   <section class="section wedding-calendar" id="wcal">
@@ -148,7 +158,17 @@
           <tr><td></td><td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
           <tr><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td></tr>
           <tr><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td></tr>
-          <tr><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td class="mark-heart">25</td><td class="mark-heart">26</td></tr>
+          <tr>
+            <td>20</td><td>21</td><td>22</td><td>23</td><td>24</td>
+            <!-- 🔶 25 -->
+            <td>
+              <div class="mark-fill"><span>25</span></div>
+            </td>
+            <!-- 🔶 26 -->
+            <td>
+              <div class="mark-fill"><span>26</span></div>
+            </td>
+          </tr>
           <tr><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td></td><td></td></tr>
         </tbody>
       </table>
@@ -169,7 +189,7 @@
   <!-- ===== GALLERY ===== -->
   <section class="section gallery" id="gallery">
     <h2 class="gallery-title">Bộ Sưu Tập Ảnh Cưới</h2>
-    <p class="gallery-sub">Những khoảnh khắc đáng nhớ của Quang Huy &amp; Thanh Thùy</p>
+    <p class="gallery-sub">💕Những khoảnh khắc đáng nhớ💕</p>
     <div class="gallery-card">
       <div class="gallery-grid">
         <figure class="tile big"><img src="./assets/images/anh1.JPG" alt="Ảnh cưới 1"></figure>
@@ -255,7 +275,8 @@
       </form>
     </div>
   </section>
-<!-- ===== XÁC NHẬN THAM DỰ ===== -->
+
+  <!-- ===== XÁC NHẬN THAM DỰ ===== -->
   <section class="section rsvp" id="rsvp">
     <div class="rsvp-card">
       <div class="rsvp-avatar">
@@ -300,6 +321,7 @@
       </form>
     </div>
   </section>
+
   <!-- ===== THANK YOU ===== -->
   <section class="section thankyou">
     <div class="ty-container">
@@ -307,7 +329,7 @@
       <div class="ty-text">
         <h2 class="ty-title">Thank You!</h2>
         <p class="ty-names">– Quang Huy & Thanh Thùy –</p>
-        <div class="ty-hearts">💗💗💗</div>
+        <div class="ty-hearts">💗💕💗</div>
       </div>
     </div>
   </section>
@@ -318,7 +340,5 @@
   <audio id="bgm" src="./assets/music/idoo.mp3" autoplay loop preload="auto"></audio>
 
   <script src="./script.js"></script>
-
-  
 </body>
 </html>

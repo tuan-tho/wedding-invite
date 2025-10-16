@@ -1,15 +1,10 @@
-// ===== 🎵 NHẠC NỀN (AUTOPLAY IM LẶNG + MỞ TIẾNG SAU CỬ CHỈ) =====
+// ===== 🎵 NHẠC NỀN: AUTOPLAY MUTE + MỞ TIẾNG NGAY TRONG CỬ CHỈ ĐẦU =====
 const audio = document.getElementById('bgm');
 const musicBtn = document.getElementById('musicBtn');
+
 let isPlaying = false;
+let unlocked = false;
 
-if (audio) {
-  audio.muted = true; // luôn bắt đầu im lặng
-  audio.volume = 0;
-  audio.loop = true;
-}
-
-// Cập nhật trạng thái nút
 function setBtnState(playing) {
   if (!musicBtn) return;
   isPlaying = !!playing;
@@ -18,7 +13,7 @@ function setBtnState(playing) {
   musicBtn.setAttribute('aria-pressed', playing ? 'true' : 'false');
 }
 
-// Làm mềm âm lượng khi tăng / giảm
+// Fade volume
 async function rampVolume(to = 1, duration = 800) {
   if (!audio) return;
   const from = audio.volume ?? 0;
@@ -34,64 +29,95 @@ async function rampVolume(to = 1, duration = 800) {
   });
 }
 
-// Bắt đầu phát im lặng, chờ người dùng chạm để mở tiếng
-async function ensureAutoPlay() {
-  if (!audio) return;
+// 🔓 Mở khóa âm thanh *trong chính cử chỉ*
+async function unlockAudio() {
+  if (!audio || unlocked) return;
+  unlocked = true; // tránh chạy lặp
+
   try {
-    await audio.play(); // phát ở chế độ muted → không bị chặn
-  } catch {}
+    // iOS/WebView thân thiện: đảm bảo inline
+    audio.setAttribute('playsinline', '');
+    audio.setAttribute('webkit-playsinline', '');
 
-  const unlock = async () => {
-    try {
-      audio.muted = false;
-      audio.removeAttribute?.('muted');
-      if (audio.paused) await audio.play().catch(()=>{});
-      audio.volume = 0;
-      await rampVolume(1, 1200);
-      setBtnState(true);
-    } catch (e) {
-      console.warn('Không mở được tiếng:', e);
-    }
-    gestureEvents.forEach(ev =>
-      window.removeEventListener(ev, unlock, opts)
-    );
-  };
+    // Một số webview cần bỏ attr muted lẫn thuộc tính
+    audio.muted = false;
+    audio.removeAttribute?.('muted');
 
-  const gestureEvents = ['pointerdown', 'touchstart', 'click', 'keydown'];
-  const opts = { passive: true, once: true, capture: true };
-  gestureEvents.forEach(ev =>
-    window.addEventListener(ev, unlock, opts)
-  );
+    // Trick iOS: ensure play() nằm trong cùng event với unmute
+    // Gọi pause() rồi play() lại giúp một số webview “nạp” tiếng
+    if (!audio.paused) audio.pause();
+    // đảm bảo phát trong cùng gesture
+    try { await audio.play(); } catch {}
 
-  setBtnState(false);
+    // Bắt đầu từ 0 rồi fade lên để đỡ gắt
+    audio.volume = 0;
+    await rampVolume(1, 900);
+    setBtnState(true);
+  } catch (e) {
+    // Nếu lỗi, cho phép lần cử chỉ kế tiếp thử lại
+    unlocked = false;
+    console.warn('Unlock audio failed:', e);
+  }
 }
 
-// Nút nhạc (bật / tắt thủ công)
+// Khởi tạo: phát im lặng ngay khi load (để sẵn stream)
+(function initAudio(){
+  if (!audio) return;
+  audio.loop = true;
+  audio.volume = 0;
+  audio.muted = true;
+  audio.setAttribute('muted', '');
+  audio.setAttribute('playsinline', '');
+  audio.setAttribute('webkit-playsinline', '');
+  audio.play().catch(()=>{});
+  setBtnState(false);
+
+  // Lắng nghe CỬ CHỈ ĐẦU TIÊN ở mức capture để ưu tiên
+  const evts = ['pointerdown','pointerup','touchstart','touchend','click','keydown'];
+  const opts = { capture:true, once:true, passive:true };
+  evts.forEach(ev => window.addEventListener(ev, async () => {
+    // Gỡ toàn bộ listeners còn lại
+    evts.forEach(e2 => window.removeEventListener(e2, unlockAudio, opts));
+    await unlockAudio();
+  }, opts));
+})();
+
+// Nút nhạc: cũng đóng vai trò “mở khóa” nếu chưa unlock
 if (musicBtn && audio) {
-  musicBtn.addEventListener('click', async e => {
+  musicBtn.addEventListener('click', async (e) => {
     e.stopPropagation();
     try {
-      if (audio.muted || audio.paused) {
+      if (!unlocked) {
+        await unlockAudio();
+        return;
+      }
+      if (audio.paused) {
         audio.muted = false;
         audio.removeAttribute?.('muted');
-        if (audio.paused) await audio.play().catch(()=>{});
         audio.volume = 0;
-        await rampVolume(1, 600);
+        await audio.play().catch(()=>{});
+        await rampVolume(1, 500);
         setBtnState(true);
       } else {
-        await rampVolume(0, 400);
+        await rampVolume(0, 350);
         audio.pause();
         setBtnState(false);
       }
     } catch (err) {
-      console.log('Không thể phát nhạc:', err);
+      console.log('Music toggle error:', err);
     }
   });
 }
 
-// Khi trang load xong
-window.addEventListener('load', () => {
-  ensureAutoPlay(); // chạy im lặng trước, chờ chạm mới mở tiếng
+// (Tùy chọn) Tạm dừng khi ẩn tab, phát lại khi quay về
+document.addEventListener('visibilitychange', async () => {
+  if (!audio) return;
+  if (document.hidden && !audio.paused) {
+    await rampVolume(0, 200);
+    audio.pause();
+  } else if (!document.hidden && unlocked && isPlaying) {
+    try { await audio.play(); await rampVolume(1, 300); } catch {}
+  }
 });
 
 

@@ -638,3 +638,63 @@ figure.tile{ margin:0 }
     bottom: -3px;
   }
 }
+/* ===== CAL-MONTH: chữ điệu, ôm mép trái bảng lịch (CSS-only, không đổi HTML) ===== */
+.wedding-calendar .cal-box{
+  position: relative;     /* để không cắt nhãn */
+  overflow: visible;
+}
+
+/* Hiển thị như một “nhãn” dán lên mép trên của bảng */
+.cal-month{
+  display: inline-block;
+  font-family: "Great Vibes", cursive;
+  font-size: 26px;
+  color: #c43766;
+  line-height: 1;
+  letter-spacing: .4px;
+
+  /* “ô” ôm mép bảng */
+  background: #fff7fa;
+  padding: 6px 12px 7px;
+  border: 1px solid #ffe1ea;
+  border-radius: 14px 14px 14px 0;
+  box-shadow: 0 6px 14px rgba(255,131,164,.18);
+
+  /* Ôm vào mép trái của bảng bên dưới (không dùng absolute để khỏi đè cal-title) */
+  margin: -8px 0 0 12px;  /* kéo xuống sát cal-title và dịch vào trái */
+  transform: translateY(10px); /* “tràn” nhẹ vào viền trên của bảng */
+  position: relative;
+  z-index: 2;
+}
+
+/* Tạo đường gạch mảnh biến mất dần phía dưới chữ (nhẹ nhàng) */
+.cal-month::after{
+  content: "";
+  position: absolute;
+  left: 10px;
+  bottom: -4px;
+  width: 68%;
+  height: 1.8px;
+  background: linear-gradient(90deg, #f9a1b5 0%, transparent 100%);
+  border-radius: 50%;
+  opacity: .6;
+}
+
+/* Đẩy bảng xuống chút để tránh chữ chạm sát viền */
+.cal-table{ margin-top: 8px; }
+
+/* Mobile tinh chỉnh */
+@media (max-width: 480px){
+  .cal-month{
+    font-size: 22px;
+    padding: 5px 10px 6px;
+    margin-left: 10px;
+    transform: translateY(8px);
+  }
+  .cal-month::after{
+    width: 70%;
+    left: 8px;
+    bottom: -3px;
+  }
+  .cal-table{ margin-top: 6px; }
+}

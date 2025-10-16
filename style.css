@@ -294,8 +294,6 @@ body.modal-open{overflow:hidden}
 }
 
 /* ===== LỄ THÀNH HÔN + COUNTDOWN (CĂN GIỮA CHẮC CHẮN) ===== */
-
-/* ===== LỄ THÀNH HÔN + COUNTDOWN (CĂN GIỮA CHẮC CHẮN) ===== */
 .wedding-calendar {
   background: #fff;
   text-align: center;
@@ -373,11 +371,11 @@ body.modal-open{overflow:hidden}
   display: flex !important;
   justify-content: center;
   align-items: center;
-  flex-wrap: nowrap !important;   /* ❌ không cho xuống dòng */
+  flex-wrap: nowrap !important;
   gap: 14px;
   margin-top: 12px;
   max-width: none;
-  overflow-x: auto;               /* nếu nhỏ quá thì cuộn ngang nhẹ */
+  overflow-x: auto;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
@@ -426,7 +424,6 @@ body.modal-open{overflow:hidden}
   }
 }
 
-
 /* ===== GALLERY ===== */
 .gallery{
   background:#fbf7f2;
@@ -459,7 +456,6 @@ figure.tile{ margin:0 }
 .tile.wide{ aspect-ratio:16/9 }
 .tile.tall{ aspect-ratio:3/4 }
 .tile.big{ grid-column:span 2; aspect-ratio:3/2 }
-/* Mobile: ép vuông */
 @media (max-width:560px){
   .tile, .tile.wide, .tile.tall{ aspect-ratio:1/1 !important }
   .tile.big{ grid-column:span 2; aspect-ratio:1/1 !important }
@@ -469,18 +465,6 @@ figure.tile{ margin:0 }
   transition:transform .35s ease, filter .35s ease;
 }
 .tile:hover img{ transform:scale(1.04); filter:saturate(1.05) }
-
-/* === Giữ countdown 1 hàng nếu muốn (tùy chọn)
-.wedding-calendar .countdown{ max-width:none; flex-wrap:nowrap; gap:16px }
-.wedding-calendar .cd-item{ min-width:74px; padding:12px 10px }
-@media (max-width:380px){
-  .wedding-calendar .countdown{ gap:12px }
-  .wedding-calendar .cd-item{ min-width:68px; padding:10px 8px }
-}
-@supports(padding:max(0px)){
-  .wedding-calendar .cal-box{ width: min(560px, 100% - env(safe-area-inset-left) - env(safe-area-inset-right) - 16px) }
-}
-*/
 
 /* ===== HIỆU ỨNG XUẤT HIỆN KHI CUỘN ===== */
 .fade-in { opacity:0; transform: translateY(40px); transition: opacity 1s ease-out, transform 1s ease-out; }
@@ -530,90 +514,74 @@ figure.tile{ margin:0 }
 .to-top-btn.show { opacity: 1; visibility: visible; transform: translateY(0); }
 .to-top-btn:hover { transform: translateY(-2px); }
 
-/* safe-area iOS */
 @supports(padding:max(0px)){
   .to-top-btn{ bottom: max(16px, env(safe-area-inset-bottom)); }
   .music-btn{ bottom: calc(max(16px, env(safe-area-inset-bottom)) + 70px) !important; }
 }
 .hero-text .names {
-  white-space: nowrap;          /* Không cho xuống hàng */
-  text-align: center;           /* Căn giữa tên */
-  font-size: 28px;              /* Kích thước chữ (bạn có thể tăng/giảm tùy ý) */
-  line-height: 1.4;             /* Giãn dòng nhẹ cho đẹp */
+  white-space: nowrap;
+  text-align: center;
+  font-size: 28px;
+  line-height: 1.4;
 }
 @media (max-width: 420px) {
-  .hero-text .names {
-    white-space: normal; /* Cho phép xuống dòng khi màn hình quá hẹp */
-  }
+  .hero-text .names { white-space: normal; }
 }
 .ty-names {
-  white-space: nowrap;     /* ✅ Không cho xuống dòng */
-  text-align: center;      /* Căn giữa tên */
-  font-size: 22px;         /* Kích thước chữ (tuỳ chỉnh) */
-  font-weight: 500;        /* Đậm nhẹ cho sang */
-  letter-spacing: 1px;     /* Giãn chữ nhẹ */
+  white-space: nowrap;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 1px;
 }
 @media (max-width: 400px) {
-  .ty-names {
-    white-space: normal;   /* Cho phép xuống hàng lại khi cần */
-  }
+  .ty-names { white-space: normal; }
 }
+
 /* ===== FIX: QR modal không tràn trên mobile ===== */
 .modal { overscroll-behavior: contain; }
-
 .modal-body{
   width: min(92vw, 560px);
   max-height: min(86vh, 760px);
-  overflow: auto; /* cuộn bên trong modal nếu dài */
+  overflow: auto;
   padding: 16px 14px;
   border-radius: 14px;
 }
-
-/* Lưới & ảnh trong modal */
-.qr-grid{ grid-template-columns: 1fr; gap: 12px; } /* mặc định 1 cột để chắc gọn trên app in-app browser */
+.qr-grid{ grid-template-columns: 1fr; gap: 12px; }
 .qr-img{
   width: clamp(160px, 72vw, 240px);
   max-width: 100%;
   height: auto;
   border-radius: 10px;
 }
-
-/* Nút nhỏ gọn hơn để không bị rơi ra ngoài */
 .qr-actions{ display:flex; justify-content:center; gap: 8px; flex-wrap: wrap; }
 .btn.small{ padding: 8px 10px; font-size: 12px; }
-
-/* Tiêu đề & sub ngắn lại một chút để tiết kiệm không gian */
 .modal-title{ font-size: 28px; }
 .modal-sub{ font-size: 14px; }
-
-/* iOS safe-area */
 @supports(padding:max(0px)){
   .modal-body{
     padding-left:  max(12px, env(safe-area-inset-left));
     padding-right: max(12px, env(safe-area-inset-right));
   }
 }
-
-/* Màn rất nhỏ (<= 360px) thu nhỏ thêm một nhịp */
 @media (max-width: 360px){
   .modal-body{ padding: 12px 10px; border-radius: 12px; }
   .qr-img{ width: clamp(150px, 80vw, 210px); }
   .btn.small{ padding: 7px 9px; font-size: 11.5px; }
 }
+
 /* ===== CHỮ "THÁNG 10 / 2025" – ĐIỆU VÀ ÔM VÀO BẢNG ===== */
 .cal-month {
-  font-family: "Great Vibes", cursive;   /* ✨ font điệu mềm mại */
+  font-family: "Great Vibes", cursive;
   font-size: 26px;
   color: #c43766;
   font-weight: 500;
   position: relative;
   text-align: left;
-  margin: -10px 0 2px 22px;              /* kéo sát khung lịch */
+  margin: -10px 0 2px 22px;
   line-height: 1;
   letter-spacing: 0.5px;
 }
-
-/* Tạo đường cong nhẹ phía dưới chữ (hiệu ứng ôm bảng) */
 .cal-month::after {
   content: "";
   position: absolute;
@@ -625,65 +593,34 @@ figure.tile{ margin:0 }
   border-radius: 50%;
   opacity: 0.6;
 }
-
-/* Thu nhỏ và dịch lại cho mobile */
 @media (max-width: 480px) {
   .cal-month {
     font-size: 22px;
     margin-left: 14px;
     margin-bottom: 4px;
   }
-  .cal-month::after {
-    width: 70%;
-    bottom: -3px;
-  }
-}
-/* ===== CAL-MONTH: chữ điệu, ôm mép trái bảng lịch (CSS-only, không đổi HTML) ===== */
-.wedding-calendar .cal-box{
-  position: relative;     /* để không cắt nhãn */
-  overflow: visible;
+  .cal-month::after { width: 70%; bottom: -3px; }
 }
 
-/* Hiển thị như một “nhãn” dán lên mép trên của bảng */
+/* Ôm mép trái bảng bằng “nhãn” */
+.wedding-calendar .cal-box{ position: relative; overflow: visible; }
 .cal-month{
   display: inline-block;
-  font-family: "Great Vibes", cursive;
-  font-size: 26px;
-  color: #c43766;
-  line-height: 1;
-  letter-spacing: .4px;
-
-  /* “ô” ôm mép bảng */
   background: #fff7fa;
   padding: 6px 12px 7px;
   border: 1px solid #ffe1ea;
   border-radius: 14px 14px 14px 0;
   box-shadow: 0 6px 14px rgba(255,131,164,.18);
-
-  /* Ôm vào mép trái của bảng bên dưới (không dùng absolute để khỏi đè cal-title) */
-  margin: -8px 0 0 12px;  /* kéo xuống sát cal-title và dịch vào trái */
-  transform: translateY(10px); /* “tràn” nhẹ vào viền trên của bảng */
-  position: relative;
+  margin: -8px 0 0 12px;
+  transform: translateY(10px);
   z-index: 2;
 }
-
-/* Tạo đường gạch mảnh biến mất dần phía dưới chữ (nhẹ nhàng) */
 .cal-month::after{
-  content: "";
-  position: absolute;
   left: 10px;
   bottom: -4px;
   width: 68%;
-  height: 1.8px;
-  background: linear-gradient(90deg, #f9a1b5 0%, transparent 100%);
-  border-radius: 50%;
-  opacity: .6;
 }
-
-/* Đẩy bảng xuống chút để tránh chữ chạm sát viền */
 .cal-table{ margin-top: 8px; }
-
-/* Mobile tinh chỉnh */
 @media (max-width: 480px){
   .cal-month{
     font-size: 22px;
@@ -697,4 +634,30 @@ figure.tile{ margin:0 }
     bottom: -3px;
   }
   .cal-table{ margin-top: 6px; }
+}
+
+/* ==== ƯU TIÊN MODAL LUÔN NỔI LÊN TRÊN ==== */
+.modal{ z-index: 9999; }
+.modal[aria-hidden="true"]{ display:none; }
+
+/* ==== TOAST (thông báo nổi) dùng cho nút Gửi lời chúc / Xác nhận ==== */
+.toast{
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%) translateY(16px);
+  background: rgba(17,17,17,.9);
+  color:#fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.22);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease;
+  z-index: 10000;
+}
+.toast.show{
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }

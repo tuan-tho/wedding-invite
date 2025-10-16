@@ -44,9 +44,7 @@ async function unlockAudio() {
     audio.removeAttribute?.('muted');
 
     // Trick iOS: ensure play() nằm trong cùng event với unmute
-    // Gọi pause() rồi play() lại giúp một số webview “nạp” tiếng
     if (!audio.paused) audio.pause();
-    // đảm bảo phát trong cùng gesture
     try { await audio.play(); } catch {}
 
     // Bắt đầu từ 0 rồi fade lên để đỡ gắt
@@ -76,8 +74,6 @@ async function unlockAudio() {
   const evts = ['pointerdown','pointerup','touchstart','touchend','click','keydown'];
   const opts = { capture:true, once:true, passive:true };
   evts.forEach(ev => window.addEventListener(ev, async () => {
-    // Gỡ toàn bộ listeners còn lại
-    evts.forEach(e2 => window.removeEventListener(e2, unlockAudio, opts));
     await unlockAudio();
   }, opts));
 })();
@@ -120,6 +116,19 @@ document.addEventListener('visibilitychange', async () => {
   }
 });
 
+/* ===== Toast (thông báo nổi) ===== */
+function showToast(msg){
+  let t = document.querySelector('.toast');
+  if(!t){
+    t = document.createElement('div');
+    t.className = 'toast';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._hideTimer);
+  t._hideTimer = setTimeout(()=> t.classList.remove('show'), 2500);
+}
 
 // ===== 🌸 HIỆU ỨNG KHI CUỘN =====
 function initScrollAnimations() {
@@ -141,7 +150,9 @@ function initScrollAnimations() {
 
 window.addEventListener('DOMContentLoaded', initScrollAnimations);
 window.addEventListener('load', () => {
-  ensureAutoPlay();   // 👈 phát nhạc ngay khi có thể
+  // ❌ ensureAutoPlay() gây lỗi vì không tồn tại → làm hỏng các bind phía dưới
+  // ensureAutoPlay();
+
   startHeartRain();
   bindGiftModal();
   bindGuestbook();
@@ -176,7 +187,7 @@ function bindGiftModal(){
   const open = () => { modal.classList.remove('hidden'); modal.setAttribute('aria-hidden','false'); }
   const close = () => { modal.classList.add('hidden'); modal.setAttribute('aria-hidden','true'); }
 
-  btn.addEventListener('click', open);
+  btn.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); open(); });
   if (closeBtn) closeBtn.addEventListener('click', close);
   if (backdrop) backdrop.addEventListener('click', close);
   document.addEventListener('keydown', e => { if(e.key === 'Escape') close(); });
@@ -201,19 +212,23 @@ function bindGuestbook(){
   const note = document.getElementById('wishNote');
   if(!form) return;
 
+  // Chặn submit (không reload/scroll lên đầu), chỉ hiện thông báo
+  form.setAttribute('action','javascript:void(0)');
   form.addEventListener('submit', e=>{
     e.preventDefault();
+    e.stopPropagation();
     const name = document.getElementById('fullname').value.trim();
     const rel  = document.getElementById('relation').value;
     const msg  = document.getElementById('message').value.trim();
     if(!name || !rel || !msg){
-      alert('Bạn vui lòng điền đầy đủ Họ tên, mối quan hệ và lời chúc nhé!');
+      showToast('⚠️ Vui lòng điền đầy đủ Họ tên, mối quan hệ và lời chúc!');
       return;
     }
-    note.hidden = false;
+    // Chỉ hiện thông báo (không điều hướng)
+    showToast('💌 Đã nhận được lời chúc của bạn!');
+    if (note) { note.hidden = false; setTimeout(()=> note.hidden = true, 3500); }
     form.reset();
-    setTimeout(()=>{ note.hidden = true; }, 3500);
-  });
+  }, {capture:true});
 }
 
 // ===== Gợi ý chúc sẵn =====
@@ -233,21 +248,24 @@ function bindRSVP(){
   const note = document.getElementById('rsvpNote');
   if(!form) return;
 
+  // Chặn submit (không điều hướng), chỉ hiện thông báo
+  form.setAttribute('action','javascript:void(0)');
   form.addEventListener('submit', e=>{
     e.preventDefault();
+    e.stopPropagation();
     const name = document.getElementById('rsvpName')?.value.trim();
     const phone = document.getElementById('rsvpPhone')?.value.trim();
     const eventSel = document.getElementById('rsvpEvent')?.value;
     const guests = document.getElementById('rsvpGuests')?.value;
     const attend = (form.querySelector('input[name="rsvpAttend"]:checked')||{}).value;
     if(!name || !phone || !eventSel || !guests || !attend){
-      alert('Vui lòng điền đủ thông tin và chọn tham dự/không tham dự nhé!');
+      showToast('⚠️ Vui lòng điền đủ thông tin và chọn tham dự/không tham dự!');
       return;
     }
-    note.hidden = false;
+    showToast('✅ Cảm ơn bạn! Chúng tôi đã ghi nhận thông tin tham dự.');
+    if (note) { note.hidden = false; setTimeout(()=> note.hidden = true, 3500); }
     form.reset();
-    setTimeout(()=>{ note.hidden = true; }, 3500);
-  });
+  }, {capture:true});
 }
 
 // ===== ⏳ COUNTDOWN =====
@@ -277,6 +295,7 @@ function bindRSVP(){
   tick();
   setInterval(tick, 1000);
 })();
+
 // Cuộn mượt xuống phần RSVP khi nhấn "Xác nhận tham dự"
 document.querySelectorAll('a[href^="#rsvp"]').forEach(link => {
   link.addEventListener('click', e => {
@@ -287,6 +306,7 @@ document.querySelectorAll('a[href^="#rsvp"]').forEach(link => {
     }
   });
 });
+
 // ===== Nút lên đầu trang =====
 const toTopBtn = document.getElementById('toTopBtn');
 

@@ -558,3 +558,83 @@ figure.tile{ margin:0 }
     white-space: normal;   /* Cho phép xuống hàng lại khi cần */
   }
 }
+/* ===== FIX: QR modal không tràn trên mobile ===== */
+.modal { overscroll-behavior: contain; }
+
+.modal-body{
+  width: min(92vw, 560px);
+  max-height: min(86vh, 760px);
+  overflow: auto; /* cuộn bên trong modal nếu dài */
+  padding: 16px 14px;
+  border-radius: 14px;
+}
+
+/* Lưới & ảnh trong modal */
+.qr-grid{ grid-template-columns: 1fr; gap: 12px; } /* mặc định 1 cột để chắc gọn trên app in-app browser */
+.qr-img{
+  width: clamp(160px, 72vw, 240px);
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Nút nhỏ gọn hơn để không bị rơi ra ngoài */
+.qr-actions{ display:flex; justify-content:center; gap: 8px; flex-wrap: wrap; }
+.btn.small{ padding: 8px 10px; font-size: 12px; }
+
+/* Tiêu đề & sub ngắn lại một chút để tiết kiệm không gian */
+.modal-title{ font-size: 28px; }
+.modal-sub{ font-size: 14px; }
+
+/* iOS safe-area */
+@supports(padding:max(0px)){
+  .modal-body{
+    padding-left:  max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+  }
+}
+
+/* Màn rất nhỏ (<= 360px) thu nhỏ thêm một nhịp */
+@media (max-width: 360px){
+  .modal-body{ padding: 12px 10px; border-radius: 12px; }
+  .qr-img{ width: clamp(150px, 80vw, 210px); }
+  .btn.small{ padding: 7px 9px; font-size: 11.5px; }
+}
+/* ===== CHỮ "THÁNG 10 / 2025" – ĐIỆU VÀ ÔM VÀO BẢNG ===== */
+.cal-month {
+  font-family: "Great Vibes", cursive;   /* ✨ font điệu mềm mại */
+  font-size: 26px;
+  color: #c43766;
+  font-weight: 500;
+  position: relative;
+  text-align: left;
+  margin: -10px 0 2px 22px;              /* kéo sát khung lịch */
+  line-height: 1;
+  letter-spacing: 0.5px;
+}
+
+/* Tạo đường cong nhẹ phía dưới chữ (hiệu ứng ôm bảng) */
+.cal-month::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 68%;
+  height: 1.8px;
+  background: linear-gradient(90deg, #f9a1b5 0%, transparent 100%);
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+/* Thu nhỏ và dịch lại cho mobile */
+@media (max-width: 480px) {
+  .cal-month {
+    font-size: 22px;
+    margin-left: 14px;
+    margin-bottom: 4px;
+  }
+  .cal-month::after {
+    width: 70%;
+    bottom: -3px;
+  }
+}
